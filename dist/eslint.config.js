@@ -19,7 +19,6 @@ const dirname = path.dirname(filename);
 const compat = new FlatCompat({
     baseDirectory: dirname,
 });
-console.log({ compat });
 const overrides = {
     rules: {
         '@babel/object-curly-spacing': 'off',
@@ -34,12 +33,6 @@ const overrides = {
         'object-property-newline': 'off',
     },
 };
-const canonicalJson = compat.extends('canonical/json', 'canonical/prettier').map(item => {
-    return {
-        ...item,
-        files: ['*.json'],
-    };
-});
 const config = [
     {
         files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
@@ -54,11 +47,25 @@ const config = [
         },
     },
     ...compat.extends('canonical', 'canonical/prettier'),
-    ...canonicalJson,
+    ...compat.extends('canonical/json', 'canonical/prettier').map(item => {
+        return {
+            ...item,
+            files: ['*.json'],
+        };
+    }),
     ...compat.extends('canonical/yaml', 'canonical/prettier').map(item => {
         return {
             ...item,
             files: ['*.yaml'],
+        };
+    }),
+    ...compat.extends('canonical/typescript', 'canonical/prettier').map(item => {
+        return {
+            ...item,
+            files: ['*.ts'],
+            parserOptions: {
+                project: './tsconfig.json',
+            },
         };
     }),
     {
@@ -68,17 +75,6 @@ const config = [
         },
     },
     {
-        // TODO: Figure out:
-        //   overrides: [
-        //     {
-        //       extends: ['canonical/typescript', 'canonical/prettier'],
-        //       files: '*.ts',
-        //       parserOptions: {
-        //         project: './tsconfig.json',
-        //       },
-        //     },
-        //   ],
-        //   root: true,
         rules: {
             'canonical/destructuring-property-newline': 'off',
             'canonical/import-specifier-newline': 'off',
