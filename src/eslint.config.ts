@@ -65,6 +65,12 @@ const config: Linter.Config = [
   },
   ...compat.extends('canonical', 'canonical/prettier'),
   ...canonicalJson,
+  ...compat.extends('canonical/yaml', 'canonical/prettier').map(item => {
+    return {
+      ...item,
+      files: ['*.yaml'],
+    }
+  }),
   {
     files: ['{**/{index,_app}.tsx,next.config.js}'],
     rules: {
@@ -81,12 +87,6 @@ const config: Linter.Config = [
     //         project: './tsconfig.json',
     //       },
     //     },
-    
-    //     {
-    //       extends: ['canonical/yaml', 'canonical/prettier'],
-    //       files: '*.yaml',
-    //     },
-
     //   ],
     //   root: true,
     rules: {
