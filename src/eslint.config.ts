@@ -55,26 +55,26 @@ const config: Linter.Config = [
     },
   },
   ...compat.extends('canonical', 'canonical/prettier'),
-  ...compat.extends('canonical/json', 'canonical/prettier').map(item => {
+  ...compat.extends('canonical/json', 'canonical/prettier').map((item) => {
     return {
       ...item,
       files: ['*.json'],
-    }
+    };
   }),
-  ...compat.extends('canonical/yaml', 'canonical/prettier').map(item => {
+  ...compat.extends('canonical/yaml', 'canonical/prettier').map((item) => {
     return {
       ...item,
       files: ['*.yaml'],
-    }
+    };
   }),
-  ...compat.extends('canonical/typescript', 'canonical/prettier').map(item => {
+  ...compat.extends('canonical/typescript', 'canonical/prettier').map((item) => {
     return {
       ...item,
       files: ['*.ts'],
       parserOptions: {
         project: './tsconfig.json',
       },
-    }
+    };
   }),
   {
     files: ['{**/{index,_app}.tsx,next.config.js}'],

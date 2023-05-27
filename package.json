@@ -6,6 +6,7 @@
   "scripts": {
     "build": "rm dist/* && yarn tsc"
   },
+  "prettier": "@nearfoundation/near-prettier-config",
   "dependencies": {
     "@babel/eslint-plugin": "^7.19.1",
     "@eslint/eslintrc": "^2.0.3",
@@ -23,5 +24,9 @@
   },
   "peerDependencies": {
     "eslint": "^8.41.0"
+  },
+  "devDependencies": {
+    "@nearfoundation/near-prettier-config": "^1.0.1",
+    "prettier": "^2.8.8"
   }
 }
