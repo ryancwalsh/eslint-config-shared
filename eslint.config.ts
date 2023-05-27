@@ -1,5 +1,7 @@
 // Remember to reload VSC after changing this file.
 // TODO: Publish this as a package, and update other repos to import from npm.
+// https://eslint.org/blog/2022/08/new-config-system-part-2/
+// https://stackoverflow.com/a/74819187/
 // Inspired by https://github.com/NEAR-Edu/eslint-config-near/blob/21db3ac89ec7f307b9c5e1bc09da2e5d43a4bd94/src/lib/default.ts
 
 import path from 'path';
@@ -9,6 +11,7 @@ import { FlatCompat } from '@eslint/eslintrc';
 import nextPlugin from '@next/eslint-plugin-next';
 import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+import { type Linter } from 'eslint';
 import functional from 'eslint-plugin-functional';
 import globals from 'globals';
 // import imprt from 'eslint-plugin-import'; // 'import' is ambiguous & prettier has trouble
@@ -21,7 +24,7 @@ const compat = new FlatCompat({
   baseDirectory: dirname,
 });
 
-console.log({ compat });
+console.log({ compat, nextPlugin });
 
 const overrides = {
   rules: {
@@ -35,11 +38,22 @@ const overrides = {
     'no-warning-comments': 'off',
     'object-curly-newline': 'off',
     'object-property-newline': 'off',
-    // "unicorn/expiring-todo-comments": "off", // TODO: Why did this need to be disabled temporarily?
   },
 };
 
-export default [
+const config: Linter.Config = [
+  {
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+    rules: {
+      ...overrides.rules,
+    },
+  },
   ...compat.extends('canonical', 'canonical/prettier'),
   {
     files: ['{**/{index,_app}.tsx,next.config.js}'],
@@ -140,17 +154,6 @@ export default [
       'ts/return-await': 2,
     },
   },
-  {
-    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-        // myCustomGlobal: "readonly"
-      },
-    },
-    rules: {
-      ...overrides.rules,
-    },
-  },
 ];
+
+export default config;
