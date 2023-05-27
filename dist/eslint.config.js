@@ -47,19 +47,19 @@ const config = [
         },
     },
     ...compat.extends('canonical', 'canonical/prettier'),
-    ...compat.extends('canonical/json', 'canonical/prettier').map(item => {
+    ...compat.extends('canonical/json', 'canonical/prettier').map((item) => {
         return {
             ...item,
             files: ['*.json'],
         };
     }),
-    ...compat.extends('canonical/yaml', 'canonical/prettier').map(item => {
+    ...compat.extends('canonical/yaml', 'canonical/prettier').map((item) => {
         return {
             ...item,
             files: ['*.yaml'],
         };
     }),
-    ...compat.extends('canonical/typescript', 'canonical/prettier').map(item => {
+    ...compat.extends('canonical/typescript', 'canonical/prettier').map((item) => {
         return {
             ...item,
             files: ['*.ts'],
@@ -69,7 +69,7 @@ const config = [
         };
     }),
     {
-        files: ['{**/{index,_app}.tsx,next.config.js}'],
+        files: ['{**/{index,_app}.tsx,next.config.js,**/eslint.config.js,**/eslint.config.ts}'],
         rules: {
             'canonical/filename-match-exported': 'off',
         },

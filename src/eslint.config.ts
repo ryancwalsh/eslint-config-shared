@@ -7,13 +7,10 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// @ts-ignore
 import { FlatCompat } from '@eslint/eslintrc';
 import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-// @ts-ignore
 import { type Linter } from 'eslint';
-// @ts-ignore
 import functional from 'eslint-plugin-functional';
 import globals from 'globals';
 // import imprt from 'eslint-plugin-import'; // 'import' is ambiguous & prettier has trouble
@@ -77,7 +74,7 @@ const config: Linter.Config = [
     };
   }),
   {
-    files: ['{**/{index,_app}.tsx,next.config.js}'],
+    files: ['{**/{index,_app}.tsx,next.config.js,**/eslint.config.js,**/eslint.config.ts}'],
     rules: {
       'canonical/filename-match-exported': 'off',
     },
