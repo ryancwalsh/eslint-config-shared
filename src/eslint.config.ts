@@ -7,11 +7,15 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// @ts-ignore
 import { FlatCompat } from '@eslint/eslintrc';
+// @ts-ignore
 import nextPlugin from '@next/eslint-plugin-next';
 import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+// @ts-ignore
 import { type Linter } from 'eslint';
+// @ts-ignore
 import functional from 'eslint-plugin-functional';
 import globals from 'globals';
 // import imprt from 'eslint-plugin-import'; // 'import' is ambiguous & prettier has trouble
