@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "type": "module",
   "main": "dist/eslint.config.js",
-  "prettier": "./src/prettier.config.js",
   "scripts": {
     "build": "rm dist/* && yarn tsc"
   },
@@ -23,10 +22,6 @@
     "typescript": "^5.0.4"
   },
   "peerDependencies": {
-    "eslint": "^8.41.0",
-    "prettier": "2.7.1"
-  },
-    "devDependencies": {
-    "prettier": "2.7.1"
+    "eslint": "^8.41.0"
   }
 }
