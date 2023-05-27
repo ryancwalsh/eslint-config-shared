@@ -7,8 +7,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 // @ts-ignore
 import { FlatCompat } from '@eslint/eslintrc';
-// @ts-ignore
-import nextPlugin from '@next/eslint-plugin-next';
 import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 // @ts-ignore
@@ -21,7 +19,7 @@ const dirname = path.dirname(filename);
 const compat = new FlatCompat({
     baseDirectory: dirname,
 });
-console.log({ compat, nextPlugin });
+console.log({ compat });
 const overrides = {
     rules: {
         '@babel/object-curly-spacing': 'off',
@@ -36,6 +34,12 @@ const overrides = {
         'object-property-newline': 'off',
     },
 };
+const canonicalJson = compat.extends('canonical/json', 'canonical/prettier').map(item => {
+    return {
+        ...item,
+        files: ['*.json'],
+    };
+});
 const config = [
     {
         files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
@@ -50,6 +54,7 @@ const config = [
         },
     },
     ...compat.extends('canonical', 'canonical/prettier'),
+    ...canonicalJson,
     {
         files: ['{**/{index,_app}.tsx,next.config.js}'],
         rules: {
@@ -65,10 +70,6 @@ const config = [
         //       parserOptions: {
         //         project: './tsconfig.json',
         //       },
-        //     },
-        //     {
-        //       extends: ['canonical/json', 'canonical/prettier'],
-        //       files: '*.json',
         //     },
         //     {
         //       extends: ['canonical/yaml', 'canonical/prettier'],
@@ -110,15 +111,6 @@ const config = [
                 },
             ],
             'jsdoc/valid-types': 'off',
-        },
-    },
-    {
-        plugins: {
-            '@next/next': nextPlugin,
-        },
-        rules: {
-            ...nextPlugin.configs.recommended.rules,
-            ...nextPlugin.configs['core-web-vitals'].rules,
         },
     },
     {
