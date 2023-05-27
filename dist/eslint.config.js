@@ -5,11 +5,9 @@
 // Inspired by https://github.com/NEAR-Edu/eslint-config-near/blob/21db3ac89ec7f307b9c5e1bc09da2e5d43a4bd94/src/lib/default.ts
 import path from 'path';
 import { fileURLToPath } from 'url';
-// @ts-ignore
 import { FlatCompat } from '@eslint/eslintrc';
 import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-// @ts-ignore
 import functional from 'eslint-plugin-functional';
 import globals from 'globals';
 // import imprt from 'eslint-plugin-import'; // 'import' is ambiguous & prettier has trouble
@@ -34,18 +32,6 @@ const overrides = {
     },
 };
 const config = [
-    {
-        files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-        languageOptions: {
-            globals: {
-                ...globals.browser,
-                ...globals.node,
-            },
-        },
-        rules: {
-            ...overrides.rules,
-        },
-    },
     ...compat.extends('canonical', 'canonical/prettier'),
     ...compat.extends('canonical/json', 'canonical/prettier').map((item) => {
         return {
@@ -69,7 +55,7 @@ const config = [
         };
     }),
     {
-        files: ['{**/{index,_app}.tsx,next.config.js,**/eslint.config.js,**/eslint.config.ts}'],
+        files: ['{**/{index,_app}.tsx,next.config.js,**/eslint.config.js,**/eslint.config.ts,pages/*.tsx}'],
         rules: {
             'canonical/filename-match-exported': 'off',
         },
@@ -112,6 +98,17 @@ const config = [
         },
     },
     {
+        rules: {
+            'import/extensions': [
+                // https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/extensions.md#importextensions
+                'off',
+                {
+                    'nextauth]': 'never',
+                },
+            ],
+        },
+    },
+    {
         ignores: ['.next/*'],
     },
     {
@@ -135,7 +132,19 @@ const config = [
         rules: {
             ...ts.configs['eslint-recommended'].rules,
             ...ts.configs.recommended.rules,
-            'ts/return-await': 2,
+            'ts/return-await': 'error', // https://typescript-eslint.io/rules/return-await/
+        },
+    },
+    {
+        files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+        languageOptions: {
+            globals: {
+                ...globals.browser,
+                ...globals.node,
+            },
+        },
+        rules: {
+            ...overrides.rules,
         },
     },
 ];

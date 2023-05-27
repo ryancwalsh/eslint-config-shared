@@ -39,32 +39,20 @@ const overrides = {
 };
 
 const config: Linter.Config = [
-  {
-    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
-    },
-    rules: {
-      ...overrides.rules,
-    },
-  },
   ...compat.extends('canonical', 'canonical/prettier'),
-  ...compat.extends('canonical/json', 'canonical/prettier').map((item) => {
+  ...compat.extends('canonical/json', 'canonical/prettier').map((item: Linter.Config) => {
     return {
       ...item,
       files: ['*.json'],
     };
   }),
-  ...compat.extends('canonical/yaml', 'canonical/prettier').map((item) => {
+  ...compat.extends('canonical/yaml', 'canonical/prettier').map((item: Linter.Config) => {
     return {
       ...item,
       files: ['*.yaml'],
     };
   }),
-  ...compat.extends('canonical/typescript', 'canonical/prettier').map((item) => {
+  ...compat.extends('canonical/typescript', 'canonical/prettier').map((item: Linter.Config) => {
     return {
       ...item,
       files: ['*.ts'],
@@ -74,7 +62,7 @@ const config: Linter.Config = [
     };
   }),
   {
-    files: ['{**/{index,_app}.tsx,next.config.js,**/eslint.config.js,**/eslint.config.ts}'],
+    files: ['{**/{index,_app}.tsx,next.config.js,**/eslint.config.js,**/eslint.config.ts,pages/*.tsx}'],
     rules: {
       'canonical/filename-match-exported': 'off',
     },
@@ -117,6 +105,17 @@ const config: Linter.Config = [
     },
   },
   {
+    rules: {
+      'import/extensions': [
+        // https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/extensions.md#importextensions
+        'off',
+        {
+          'nextauth]': 'never',
+        },
+      ],
+    },
+  },
+  {
     ignores: ['.next/*'],
   },
   {
@@ -140,7 +139,19 @@ const config: Linter.Config = [
     rules: {
       ...ts.configs['eslint-recommended'].rules,
       ...ts.configs.recommended.rules,
-      'ts/return-await': 2,
+      'ts/return-await': 'error', // https://typescript-eslint.io/rules/return-await/
+    },
+  },
+  {
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+    rules: {
+      ...overrides.rules,
     },
   },
 ];
