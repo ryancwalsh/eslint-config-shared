@@ -1,4 +1,4 @@
-// Remember to reload VSC after changing this file.
+// Remember: after changing this file, you need to transpile it to javascript and then either run `yarn eslint .` again or reload VSC.
 // TODO: Publish this as a package, and update other repos to import from npm.
 // https://eslint.org/blog/2022/08/new-config-system-part-2/
 // https://stackoverflow.com/a/74819187/
@@ -6,11 +6,11 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
-import ts from '@typescript-eslint/eslint-plugin';
+import typeScriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import functional from 'eslint-plugin-functional';
 import globals from 'globals';
-import eslintPluginImport from 'eslint-plugin-import';
+// import eslintPluginImport from 'eslint-plugin-import'; // Seems unnecessary. Maybe it's included in the 'canonical'?
 // mimic CommonJS variables -- not needed if using CommonJS
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -32,13 +32,14 @@ const overrides = {
     },
 };
 const config = [
-    // ...compat.extends('canonical', 'canonical/prettier'),
-    // ...compat.extends('canonical/json', 'canonical/prettier').map((item: Linter.Config) => {
-    //   return {
-    //     ...item,
-    //     files: ['*.json'],
-    //   };
-    // }),
+    //...compat.extends('canonical', 'canonical/prettier'),
+    ...compat.extends('canonical/json', 'canonical/prettier').map((item) => {
+        return {
+            ...item,
+            files: ['*.json'],
+        };
+    }),
+    // TODO: Figure out how to uncomment:
     // ...compat.extends('canonical/yaml', 'canonical/prettier').map((item: Linter.Config) => {
     //   return {
     //     ...item,
@@ -60,6 +61,7 @@ const config = [
             'canonical/filename-match-exported': 'off',
         },
     },
+    // TODO: Figure out how to uncomment:
     // {
     //   rules: {
     //     'canonical/destructuring-property-newline': 'off',
@@ -124,14 +126,14 @@ const config = [
             },
         },
         plugins: {
-            '@typescript-eslint': ts,
+            '@typescript-eslint': typeScriptEslintPlugin,
             functional,
-            import: eslintPluginImport,
-            ts,
+            //import: eslintPluginImport,
+            ts: typeScriptEslintPlugin,
         },
         rules: {
-            ...ts.configs['eslint-recommended'].rules,
-            ...ts.configs.recommended.rules,
+            ...typeScriptEslintPlugin.configs['eslint-recommended'].rules,
+            ...typeScriptEslintPlugin.configs.recommended.rules,
             'ts/return-await': 'error', // https://typescript-eslint.io/rules/return-await/
         },
     },
