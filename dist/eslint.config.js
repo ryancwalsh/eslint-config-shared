@@ -32,8 +32,7 @@ const overrides = {
     },
 };
 const config = [
-    // TODO: Figure out how to uncomment:
-    //...compat.extends('canonical', 'canonical/prettier'),
+    ...compat.extends('canonical', 'canonical/prettier'),
     ...compat.extends('canonical/json', 'canonical/prettier').map((item) => {
         return {
             ...item,
