@@ -3,6 +3,8 @@
 // https://eslint.org/blog/2022/08/new-config-system-part-2/
 // https://stackoverflow.com/a/74819187/
 // Inspired by https://github.com/NEAR-Edu/eslint-config-near/blob/21db3ac89ec7f307b9c5e1bc09da2e5d43a4bd94/src/lib/default.ts
+// TODO: eslint rules for jest
+// TODO: Figure out why eslint.config.js (in a separate repo importing this one) has parser errors (and when importing 'recoil').
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
@@ -19,7 +21,6 @@ const compat = new FlatCompat({
 });
 const customRules = {
     '@babel/object-curly-spacing': 'off',
-    // TODO: '@typescript-eslint/no-explicit-any': ['warn'],
     'array-bracket-newline': 'off',
     'array-element-newline': 'off',
     'func-style': 'off',
@@ -59,12 +60,13 @@ const config = [
             files: ['*.yaml'],
         };
     }),
-    // TODO: Figure out how to uncomment:
+    // TODO: This section seems to conflict with the `tsParser` section. What's the best way to combine them or eliminate whatever isn't necessary?
     // ...compat.extends('canonical/typescript', 'canonical/prettier').map((item: Linter.Config) => {
     //   return {
     //     ...item,
     //     files: ['*.ts'],
     //     languageOptions: {
+    //       parser: tsParser, // Is there a way to find this within `item` instead of importing it separately?
     //       parserOptions: {
     //         project: './tsconfig.json',
     //       },
@@ -153,6 +155,12 @@ const config = [
         },
     },
     {
+        files: ['*.json'],
+        rules: {
+            'jsonc/sort-keys': 'off',
+        },
+    },
+    {
         files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
         languageOptions: {
             globals: {
@@ -165,4 +173,8 @@ const config = [
         },
     },
 ];
+const innerConfigs = Object.values(config);
+for (const innerConfig of innerConfigs) {
+    console.log(innerConfig.rules);
+}
 export default config;
