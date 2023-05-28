@@ -6,7 +6,6 @@
 
 import path from 'path';
 import { fileURLToPath } from 'url';
-
 import { FlatCompat } from '@eslint/eslintrc';
 import typeScriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
@@ -57,8 +56,10 @@ const config: Linter.Config = [
   //   return {
   //     ...item,
   //     files: ['*.ts'],
-  //     parserOptions: {
-  //       project: './tsconfig.json',
+  //     languageOptions: {
+  //       parserOptions: {
+  //         project: './tsconfig.json',
+  //       },
   //     },
   //   };
   // }),
@@ -68,44 +69,43 @@ const config: Linter.Config = [
       'canonical/filename-match-exported': 'off',
     },
   },
-  // TODO: Figure out how to uncomment:
-  // {
-  //   rules: {
-  //     'canonical/destructuring-property-newline': 'off',
-  //     'canonical/import-specifier-newline': 'off',
-  //     'import/extensions': [
-  //       'error',
-  //       {
-  //         css: 'always',
-  //         js: 'never',
-  //         json: 'always',
-  //         jsx: 'never',
-  //         mjs: 'never',
-  //         ts: 'never',
-  //         tsx: 'never',
-  //       },
-  //     ],
-  //     'import/no-unassigned-import': [
-  //       'error',
-  //       {
-  //         allow: ['**/*.css'],
-  //       },
-  //     ],
-  //     'import/order': [
-  //       'error',
-  //       {
-  //         alphabetize: {
-  //           caseInsensitive: false,
-  //           order: 'asc',
-  //         },
-  //         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-  //         'newlines-between': 'always',
-  //         warnOnUnassignedImports: false,
-  //       },
-  //     ],
-  //     'jsdoc/valid-types': 'off',
-  //   },
-  // },
+  {
+    rules: {
+      'canonical/destructuring-property-newline': 'off',
+      'canonical/import-specifier-newline': 'off',
+      'import/extensions': [
+        'error',
+        {
+          css: 'always',
+          js: 'never',
+          json: 'always',
+          jsx: 'never',
+          mjs: 'never',
+          ts: 'never',
+          tsx: 'never',
+        },
+      ],
+      'import/no-unassigned-import': [
+        'error',
+        {
+          allow: ['**/*.css'],
+        },
+      ],
+      'import/order': [
+        'error',
+        {
+          alphabetize: {
+            caseInsensitive: false,
+            order: 'asc',
+          },
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          'newlines-between': 'always',
+          warnOnUnassignedImports: false,
+        },
+      ],
+      'jsdoc/valid-types': 'off',
+    },
+  },
   {
     rules: {
       'import/extensions': [
@@ -135,7 +135,7 @@ const config: Linter.Config = [
     plugins: {
       '@typescript-eslint': typeScriptEslintPlugin,
       functional,
-      //import: eslintPluginImport,
+      // import: eslintPluginImport,
       ts: typeScriptEslintPlugin,
     },
     rules: {

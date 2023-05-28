@@ -50,8 +50,10 @@ const config = [
     //   return {
     //     ...item,
     //     files: ['*.ts'],
-    //     parserOptions: {
-    //       project: './tsconfig.json',
+    //     languageOptions: {
+    //       parserOptions: {
+    //         project: './tsconfig.json',
+    //       },
     //     },
     //   };
     // }),
@@ -61,44 +63,43 @@ const config = [
             'canonical/filename-match-exported': 'off',
         },
     },
-    // TODO: Figure out how to uncomment:
-    // {
-    //   rules: {
-    //     'canonical/destructuring-property-newline': 'off',
-    //     'canonical/import-specifier-newline': 'off',
-    //     'import/extensions': [
-    //       'error',
-    //       {
-    //         css: 'always',
-    //         js: 'never',
-    //         json: 'always',
-    //         jsx: 'never',
-    //         mjs: 'never',
-    //         ts: 'never',
-    //         tsx: 'never',
-    //       },
-    //     ],
-    //     'import/no-unassigned-import': [
-    //       'error',
-    //       {
-    //         allow: ['**/*.css'],
-    //       },
-    //     ],
-    //     'import/order': [
-    //       'error',
-    //       {
-    //         alphabetize: {
-    //           caseInsensitive: false,
-    //           order: 'asc',
-    //         },
-    //         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-    //         'newlines-between': 'always',
-    //         warnOnUnassignedImports: false,
-    //       },
-    //     ],
-    //     'jsdoc/valid-types': 'off',
-    //   },
-    // },
+    {
+        rules: {
+            'canonical/destructuring-property-newline': 'off',
+            'canonical/import-specifier-newline': 'off',
+            'import/extensions': [
+                'error',
+                {
+                    css: 'always',
+                    js: 'never',
+                    json: 'always',
+                    jsx: 'never',
+                    mjs: 'never',
+                    ts: 'never',
+                    tsx: 'never',
+                },
+            ],
+            'import/no-unassigned-import': [
+                'error',
+                {
+                    allow: ['**/*.css'],
+                },
+            ],
+            'import/order': [
+                'error',
+                {
+                    alphabetize: {
+                        caseInsensitive: false,
+                        order: 'asc',
+                    },
+                    groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+                    'newlines-between': 'always',
+                    warnOnUnassignedImports: false,
+                },
+            ],
+            'jsdoc/valid-types': 'off',
+        },
+    },
     {
         rules: {
             'import/extensions': [
@@ -128,7 +129,7 @@ const config = [
         plugins: {
             '@typescript-eslint': typeScriptEslintPlugin,
             functional,
-            //import: eslintPluginImport,
+            // import: eslintPluginImport,
             ts: typeScriptEslintPlugin,
         },
         rules: {
