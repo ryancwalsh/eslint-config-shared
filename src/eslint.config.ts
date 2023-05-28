@@ -6,6 +6,7 @@
 
 import path from 'path';
 import { fileURLToPath } from 'url';
+
 import { FlatCompat } from '@eslint/eslintrc';
 import typeScriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
@@ -22,19 +23,37 @@ const compat = new FlatCompat({
   baseDirectory: dirname,
 });
 
-const overrides = {
-  rules: {
-    '@babel/object-curly-spacing': 'off',
-    'array-bracket-newline': 'off',
-    'array-element-newline': 'off',
-    'func-style': 'off',
-    'line-comment-position': 'off',
-    'no-console': 'off',
-    'no-inline-comments': 'off',
-    'no-warning-comments': 'off',
-    'object-curly-newline': 'off',
-    'object-property-newline': 'off',
-  },
+const customRules = {
+  '@babel/object-curly-spacing': 'off',
+  // TODO: '@typescript-eslint/no-explicit-any': ['warn'],
+  'array-bracket-newline': 'off',
+  'array-element-newline': 'off',
+  'func-style': 'off',
+  'line-comment-position': 'off',
+  // https://eslint.org/docs/latest/rules/max-len
+  'max-len': ['warn', { code: 150, ignoreComments: false, ignoreRegExpLiterals: true, ignoreStrings: true, ignoreTemplateLiterals: true }],
+
+  // https://eslint.org/docs/rules/max-lines
+  'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
+
+  // https://eslint.org/docs/rules/max-lines-per-function
+  'max-lines-per-function': ['error', { max: 30, skipBlankLines: true, skipComments: true }],
+
+  // https://eslint.org/docs/latest/rules/no-console
+  // 'no-console': ['error', { allow: ['warn', 'error'] }],
+  'no-console': ['warn'],
+
+  'no-inline-comments': 'off',
+  'no-warning-comments': 'off',
+  'object-curly-newline': 'off',
+  'object-property-newline': 'off',
+  // TODO: Does this come from 'next/core-web-vitals'?
+  // 'react-hooks/exhaustive-deps': [
+  //   'warn',
+  //   {
+  //     additionalHooks: '(useRecoilCallback|useRecoilTransaction_UNSTABLE)', // https://recoiljs.org/docs/introduction/installation#eslint
+  //   },
+  // ],
 };
 
 const config: Linter.Config = [
@@ -153,7 +172,7 @@ const config: Linter.Config = [
       },
     },
     rules: {
-      ...overrides.rules,
+      ...customRules,
     },
   },
 ];
