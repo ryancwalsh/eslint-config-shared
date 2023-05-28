@@ -32,6 +32,7 @@ const overrides = {
     },
 };
 const config = [
+    // TODO: Figure out how to uncomment:
     //...compat.extends('canonical', 'canonical/prettier'),
     ...compat.extends('canonical/json', 'canonical/prettier').map((item) => {
         return {
@@ -39,13 +40,13 @@ const config = [
             files: ['*.json'],
         };
     }),
+    ...compat.extends('canonical/yaml', 'canonical/prettier').map((item) => {
+        return {
+            ...item,
+            files: ['*.yaml'],
+        };
+    }),
     // TODO: Figure out how to uncomment:
-    // ...compat.extends('canonical/yaml', 'canonical/prettier').map((item: Linter.Config) => {
-    //   return {
-    //     ...item,
-    //     files: ['*.yaml'],
-    //   };
-    // }),
     // ...compat.extends('canonical/typescript', 'canonical/prettier').map((item: Linter.Config) => {
     //   return {
     //     ...item,
