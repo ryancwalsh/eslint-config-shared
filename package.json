@@ -15,11 +15,11 @@
     "@typescript-eslint/parser": "^5.59.7",
     "eslint": "^8.41.0",
     "eslint-config-canonical": "^37.0.3",
+    "eslint-config-next": "^13.4.4",
     "eslint-plugin-functional": "^5.0.8",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsdoc": "40.0.2",
-    "eslint-plugin-typescript": "^0.14.0",
-    "eslint-plugin-unicorn": "^47.0.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "globals": "^13.20.0",
     "typescript": "^5.0.4"
   },

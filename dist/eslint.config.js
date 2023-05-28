@@ -10,7 +10,7 @@ import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import functional from 'eslint-plugin-functional';
 import globals from 'globals';
-// import imprt from 'eslint-plugin-import'; // 'import' is ambiguous & prettier has trouble
+import eslintPluginImport from 'eslint-plugin-import';
 // mimic CommonJS variables -- not needed if using CommonJS
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -32,71 +32,71 @@ const overrides = {
     },
 };
 const config = [
-    ...compat.extends('canonical', 'canonical/prettier'),
-    ...compat.extends('canonical/json', 'canonical/prettier').map((item) => {
-        return {
-            ...item,
-            files: ['*.json'],
-        };
-    }),
-    ...compat.extends('canonical/yaml', 'canonical/prettier').map((item) => {
-        return {
-            ...item,
-            files: ['*.yaml'],
-        };
-    }),
-    ...compat.extends('canonical/typescript', 'canonical/prettier').map((item) => {
-        return {
-            ...item,
-            files: ['*.ts'],
-            parserOptions: {
-                project: './tsconfig.json',
-            },
-        };
-    }),
+    // ...compat.extends('canonical', 'canonical/prettier'),
+    // ...compat.extends('canonical/json', 'canonical/prettier').map((item: Linter.Config) => {
+    //   return {
+    //     ...item,
+    //     files: ['*.json'],
+    //   };
+    // }),
+    // ...compat.extends('canonical/yaml', 'canonical/prettier').map((item: Linter.Config) => {
+    //   return {
+    //     ...item,
+    //     files: ['*.yaml'],
+    //   };
+    // }),
+    // ...compat.extends('canonical/typescript', 'canonical/prettier').map((item: Linter.Config) => {
+    //   return {
+    //     ...item,
+    //     files: ['*.ts'],
+    //     parserOptions: {
+    //       project: './tsconfig.json',
+    //     },
+    //   };
+    // }),
     {
         files: ['{**/{index,_app}.tsx,next.config.js,**/eslint.config.js,**/eslint.config.ts,pages/*.tsx}'],
         rules: {
             'canonical/filename-match-exported': 'off',
         },
     },
-    {
-        rules: {
-            'canonical/destructuring-property-newline': 'off',
-            'canonical/import-specifier-newline': 'off',
-            'import/extensions': [
-                'error',
-                {
-                    css: 'always',
-                    js: 'never',
-                    json: 'always',
-                    jsx: 'never',
-                    mjs: 'never',
-                    ts: 'never',
-                    tsx: 'never',
-                },
-            ],
-            'import/no-unassigned-import': [
-                'error',
-                {
-                    allow: ['**/*.css'],
-                },
-            ],
-            'import/order': [
-                'error',
-                {
-                    alphabetize: {
-                        caseInsensitive: false,
-                        order: 'asc',
-                    },
-                    groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-                    'newlines-between': 'always',
-                    warnOnUnassignedImports: false,
-                },
-            ],
-            'jsdoc/valid-types': 'off',
-        },
-    },
+    // {
+    //   rules: {
+    //     'canonical/destructuring-property-newline': 'off',
+    //     'canonical/import-specifier-newline': 'off',
+    //     'import/extensions': [
+    //       'error',
+    //       {
+    //         css: 'always',
+    //         js: 'never',
+    //         json: 'always',
+    //         jsx: 'never',
+    //         mjs: 'never',
+    //         ts: 'never',
+    //         tsx: 'never',
+    //       },
+    //     ],
+    //     'import/no-unassigned-import': [
+    //       'error',
+    //       {
+    //         allow: ['**/*.css'],
+    //       },
+    //     ],
+    //     'import/order': [
+    //       'error',
+    //       {
+    //         alphabetize: {
+    //           caseInsensitive: false,
+    //           order: 'asc',
+    //         },
+    //         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+    //         'newlines-between': 'always',
+    //         warnOnUnassignedImports: false,
+    //       },
+    //     ],
+    //     'jsdoc/valid-types': 'off',
+    //   },
+    // },
     {
         rules: {
             'import/extensions': [
@@ -126,7 +126,7 @@ const config = [
         plugins: {
             '@typescript-eslint': ts,
             functional,
-            // import: imprt,
+            import: eslintPluginImport,
             ts,
         },
         rules: {
